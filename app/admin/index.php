@@ -7,8 +7,7 @@ requireRole('admin');
 logActivity($pdo,$_SESSION['user_id'],$_SESSION['user_email'], 'view_activity_logs', 'success');
 
 //Activity LOgs Query#3
-
-$stmt = $pdo->query('SELLECT * FROM activity_logs ORDER BT activity_log_create_at DESC');
+$stmt = $pdo->query("SELECT * FROM activity_logs ORDER BY activity_log_created_at DESC");
 
 $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

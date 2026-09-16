@@ -8,7 +8,6 @@ logActivity($pdo,$_SESSION['user_id'],$_SESSION['user_email'], 'view_activity_lo
 
 //Activity LOgs Query#3
 $stmt = $pdo->query("SELECT * FROM activity_logs ORDER BY activity_log_created_at DESC");
-
 $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
@@ -18,11 +17,19 @@ $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
 </head>
 <body>
     <h1>Welcome Admin</h1>
     <a href="../../auth/signout.php">Sign Out</a>
-    <table border="1">
+    <div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+    
+    
+
+    <div class="table-responsive">  
+    <table id="example" class="table table-striped">
         <thead>
             <tr>
                 <th>Record ID</th>

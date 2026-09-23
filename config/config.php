@@ -1,7 +1,9 @@
 <?php
 session_start();
 
-require_once(__DIR__ . '/../includes/activity-logger.php');
+require_once(__DIR__ . '/../funtions/activity.php');
+require_once(__DIR__ . '/../funtions/author.php');
+require_once(__DIR__ . '/../funtions/redirect.php');
 
 define('BASE_URL','http://localhost/IT34B');
 

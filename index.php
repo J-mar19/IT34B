@@ -58,7 +58,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <title>Login</title>
 </head>
  <style>
-        body { font-family: sans-serif; background: #0d0e0e; display: grid; place-items: center; min-height: 100vh; margin: 0; }
+        body { font-family: sans-serif; background: #96bcbc; display: grid; place-items: center; min-height: 100vh; margin: 0; }
         form { background: #ffffff; padding: 30px; border-radius: 12px; width: 320px; box-shadow: 0 8px 30px rgba(0,0,0,.1); }
         label { display: block; font-weight: bold; margin-bottom: 6px; }
         input { width: 100%; padding: 12px; margin-bottom: 18px; border: 1px solid #0b0b0b; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
@@ -82,7 +82,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 </form>
 
 <?php if(isset($_GET['timeout'])): ?>
-    <p>Your session has expired due to inactivity. Please log i agian</p>
+    <p>Your session has expired due to inactivity. Please log in agian</p>
     <?php endif; ?>
     
 </body>

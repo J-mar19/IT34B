@@ -54,7 +54,7 @@ function requireLogin()
         exit;
     }
 
-    checkSessiontTimeou();
+    checkSessionTimeout();
 }
 
 function requireRole($role)

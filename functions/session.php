@@ -105,9 +105,7 @@ function checkSessionTimeout(){
 
         // Redirect
         header(
-            'Location: ' .
-            BASE_URL .
-            '/index.php?timeout=1'
+            'Location: ' . BASE_URL . '/index.php?timeout=1'
         );
     }
 

@@ -6,7 +6,12 @@ requireRole('admin');
 logActivity($pdo,$_SESSION['user_id'],$_SESSION['user_email'], 'view_activity_logs', 'success');
 
 //Activity LOgs Query#3
-$stmt = $pdo->query("SELECT * FROM activity_logs ORDER BY activity_log_created_at DESC");
+$stmt = $pdo->query("
+            SELECT * 
+            FROM activity_logs 
+            ORDER BY activity_log_created_at DESC
+        ");
+        
 $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
@@ -56,5 +61,6 @@ $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php endforeach; ?>
         </tbody>
     </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

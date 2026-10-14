@@ -6,6 +6,7 @@
 
             // String to Array
             if(strpos($ip,',') !==false){
+                
                 $ip = trim(explode(',', $ip)[0]);
             }
 

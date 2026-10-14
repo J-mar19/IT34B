@@ -59,6 +59,7 @@ function endUserSession($pdo){
 }
 
 // Check if user is already logged in
+
 function hasActiveUserSession($pdo,$user_id){
     $stmt= $pdo->prepare("
         SELECT session_id

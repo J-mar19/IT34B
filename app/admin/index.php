@@ -3,7 +3,11 @@ require '../../config/config.php';
 
 requireRole('admin');
 
-logActivity($pdo,$_SESSION['user_id'],$_SESSION['user_email'], 'view_activity_logs', 'success');
+logActivity(
+        $pdo,
+        $_SESSION['user_id'],
+        $_SESSION['user_email'], 
+        'view_activity_logs', 'success');
 
 //Activity LOgs Query#3
 $stmt = $pdo->query("
@@ -33,7 +37,7 @@ $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 
     <div class="table-responsive">  
-    <table id="example" class="table table-striped">
+    <table  class="table table-striped">
         <thead>
             <tr>
                 <th>Record ID</th>
@@ -46,7 +50,7 @@ $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Date & Time</th>
             </tr>
         </thead>
-        <tbody>
+        
             <?php foreach($activities as $activity):?>
             <tr>
                 <td><?= htmlspecialchars($activity['activity_log_id'])?></td>
@@ -59,7 +63,6 @@ $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= htmlspecialchars($activity['activity_log_created_at'])?></td>
             </tr>
             <?php endforeach; ?>
-        </tbody>
     </table>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

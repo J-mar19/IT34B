@@ -17,7 +17,7 @@ function loginUser($pdo, $login, $password)
 
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(['login' => $login]);
+    $stmt->execute([':login' => $login]);
 
     $user = $stmt->fetch();
 
@@ -53,22 +53,18 @@ function requireLogin()
         header('Location: ' . BASE_URL . '/index.php');
         exit;
     }
-
-    checkSessionTimeout();
 }
 
 function requireRole($role)
 {
     requireLogin();
-    
-    /*
+/*  
+
     if ($_SESSION['user_role'] !== $role) {
         http_response_code(403);
         die('Access Denied.');
     }
-     */
-
-
+*/      
 }
 
 ?>

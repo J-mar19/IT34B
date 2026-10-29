@@ -7,6 +7,17 @@ $section = $_GET['section'] ?? '';
 
 $action = $_GET['action'] ?? '';
 
+$activities = [];
+$sessions = [];
+
+logActivity(
+    $pdo,
+    $_SESSION['user_id'],
+    $_SESSION['user_email'],
+    'view_activity_logs',
+    'success'
+);
+
 if ($section === 'activity-logs'){
         // Activity Logs Query
         $stmt = $pdo->query("

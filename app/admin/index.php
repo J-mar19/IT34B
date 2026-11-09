@@ -7,17 +7,6 @@ $section = $_GET['section'] ?? '';
 
 $action = $_GET['action'] ?? '';
 
-$activities = [];
-$sessions = [];
-
-logActivity(
-    $pdo,
-    $_SESSION['user_id'],
-    $_SESSION['user_email'],
-    'view_activity_logs',
-    'success'
-);
-
 if ($section === 'activity-logs'){
         // Activity Logs Query
         $stmt = $pdo->query("
@@ -50,46 +39,135 @@ if ($section === 'activity-logs'){
     $sessions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-if($action==='export'){
-    of($section=== 'activity-logs'){
 
+if($action === 'export') {
+    if($section === 'activity-logs') {
+         
     $stmt = $pdo->query("
-        SELECT *
+        SELECT * 
         FROM activity_logs
         ORDER BY activity_log_created_at DESC
     ");
 
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    logActivity(
-        $pdo,
-        $_SESSION['user_id'],
-        $_SESSION['user_email'],
-        'export_activity_logs',
-        'success'
+    logactivity($pdo, $_SESSION['user_id'], 
+    $_SESSION['user_email'], 
+    'Export_Activity_Logs', 
+    'Success'
     );
-
     exportCsv(
         'activity_logs',
         [
-            'Record ID','User ID','User Email','Action',
-            'Status','IP Address','User Agent','Date & Time',
+            'Record ID',
+            'User ID',
+            'User Email',
+            'Action',
+            'Status',
+            'IP Address',
+            'User Agent',
+            'Date & Time'
         ],
         $rows
     );
-    }
 
-    if($section ==='user-sessions'){
 
-    }
+
 }
+if ($section === 'activity-logs'){
+        // Activity Logs Query
+        $stmt = $pdo->query("
+        SELECT * 
+
+            us.session_id,
+            us.user_id,
+            u.user_username,
+            u.user_email,
+            u.user_role,
+            us.session_start,
+            us.session_end,
+            us.session_duration
+
+        FROM user_sessions us
+        INNER JOIN users u
+            ON us.user_id = u.user_id
+        ORDER BY session_start DESC
+    ");
+
+    $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    logactivity($pdo, $_SESSION['user_id'], 
+    $_SESSION['user_email'],
+    'Export_User_Sessions', 
+    'Success'
+
+    );
+
+    foreach($rows as &$r) {
+        $r['session_end'] = $r['session_end'] ?? 'Active';
+
+        if ($r['session_duration'] !== null) {
+            $s = (int) $r['session_duration'];
+            $hours = floor($s / 3600);
+            $minutes = floor(($s % 3600) / 60);
+            $seconds = $s % 60;
+            $r['session_duration'] = sprintf(
+                '%02d hr %02d min %02d sec',
+                 $hours, $minutes, $seconds
+                 
+                 );
+        } else {
+            $r['session_duration'] = 'Active';
+        }
+
+        unset($r);
+
+
+        exportCsv(
+            'user_sessions',
+            [
+                'Session ID',
+                'User ID',
+                'Username',
+                'Email',
+                'Role',
+                'Session Start',
+                'Session End',
+                'Duration'
+            ],
+            $rows
+        );
+           
+
+
+
+
+}
+
+
+ }
+
+
+ }
+
+
+
+
+
+
+
+
+
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <html lang="en" data-bs-theme="dark">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
        
    
 </head>
@@ -108,9 +186,13 @@ if($action==='export'){
 
     <?php if ($section === 'activity-logs'): ?>
 
-        <h4>Activity Logs
-            <a href="index.php?section=activity-og&amp;action=emport">Export CSV</a>
+        <h4>
+            <a href="index.php?section=activity-logs&amp;action=export">
+                Export CSV
+            </a>
         </h4>
+
+        <h4>Activity Logs</h4>
 
         <table>
 
@@ -177,6 +259,11 @@ if($action==='export'){
 
         <h4>User Sessions</h4>
 
+         <a href="index.php?section=activity-logs&amp;action=export">
+                Export CSV
+
+
+            </a>
         <table>
 
             <thead>
